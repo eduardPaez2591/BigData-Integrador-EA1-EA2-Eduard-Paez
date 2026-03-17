@@ -1,0 +1,14 @@
+REPORTE DE ANÁLISIS EXPLORATORIO - 2026-03-17 16:11:16.989923
+================================================================================
+
+Total de registros: 1275
+Total de columnas: 23
+Valores nulos encontrados: 0
+Registros duplicados: 0
+Outliers detectados: 1674
+
+Columnas con valores nulos:
+Ninguna
+
+Recomendaciones:
+• Validar 9 columnas con outliers

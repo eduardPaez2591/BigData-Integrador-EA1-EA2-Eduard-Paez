@@ -1,0 +1,35 @@
+REPORTE TÉCNICO DE PREPROCESAMIENTO Y LIMPIEZA DE DATOS - 2026-03-17 16:11:26.219910
+================================================================================
+
+📊 ESTADÍSTICAS GENERALES:
+--------------------------------------------------------------------------------
+Registros iniciales: 1275
+Registros finales: 1275
+Registros eliminados: 0
+Duplicados detectados: 0
+
+🔧 OPERACIONES REALIZADAS:
+--------------------------------------------------------------------------------
+1. Normalización de Company (lowercase, sin espacios)
+2. Limpieza de RAM: conversión de string a número, imputación de 0 → 0 valores nulos
+3. Limpieza de Weight: conversión de string a número, imputación de 0 → 0 valores nulos
+4. Normalización de OS (lowercase, rellenado de valores nulos)
+5. Feature Engineering: creación de Price_Category y Price_per_kg
+
+📋 ANÁLISIS DE VALORES NULOS:
+--------------------------------------------------------------------------------
+ANTES:
+
+DESPUÉS:
+
+✅ CALIDAD DE DATOS FINAL:
+--------------------------------------------------------------------------------
+Completitud: 100.00%
+Registros con integridad completa: 1275
+Registros sin integridad total: 0
+
+📁 ARCHIVOS GENERADOS:
+--------------------------------------------------------------------------------
+- src/xlsx/cleaned_data.csv (CSV con datos limpios)
+- src/xlsx/cleaned_data.xlsx (Excel con datos limpios)
+- src/static/auditoria/cleaning_report.txt (Este archivo)

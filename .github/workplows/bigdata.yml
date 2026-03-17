@@ -1,0 +1,72 @@
+name: Pipeline Laptop Data EA1 & EA2
+
+on:
+  push:
+    branches:[ main ]
+  workflow_dispatch: # permit manual trigger of the workflow
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write # give read permissions to the repository contents
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v6
+
+    - name: Set up Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: '3.10' # specify the Python version
+        cache: 'pip'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Paso 1: Run EA1
+      run: python ingestion.py
+
+    - name: Paso 2: Run EDA
+      run: python exploratory_analysis.py
+
+    - name: Paso 3: Run EA2
+      run: python cleaning.py
+
+    - name: 📊 Upload Cleaned data Artifact (CSV)
+      uses: actions/upload-artifact@v6
+      with:
+        name: cleaned-data-csv
+        path: src/xlsx/cleaned_data.csv
+        retention-days: 30
+
+    - name: 📊 Upload Cleaned data Artifact (Excel)
+      uses: actions/upload-artifact@v6
+      with:
+        name: cleaned-data-excel
+        path: src/xlsx/cleaned_data.xlsx
+        retention-days: 30
+
+    - name: 📋 Upload EDA Report Artifact
+      uses: actions/upload-artifact@v6
+      with:
+        name: eda-report
+        path: src/static/auditoria/eda_report.txt
+        retention-days: 30
+
+    - name: 📋 Upload Audit Report Artifact
+      uses: actions/upload-artifact@v6
+      with:
+        name: audit-report
+        path: src/static/auditoria/cleaning_report.txt
+        retention-days: 30
+
+    - name: Display Audit Report
+      run: |
+        echo "=== Audit Report ==="
+        cat src/static/auditoria/cleaning_report.txt
+
+    
