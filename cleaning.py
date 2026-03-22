@@ -104,13 +104,19 @@ def ejecutar_limpieza_avanzada():
         f.write("\n📋 ANÁLISIS DE VALORES NULOS:\n")
         f.write("-"*80 + "\n")
         f.write("ANTES:\n")
-        for col, count in stats['nulos_antes'].items():
-            if count > 0:
+        nulos_antes_total = sum([v for v in stats['nulos_antes'].values() if isinstance(v, (int, float))])
+        if nulos_antes_total == 0:
+            f.write("  ✓ Sin valores nulos detectados\n")
+        else:
+            for col, count in stats['nulos_antes'].items():
                 f.write(f"  {col}: {count} nulos ({count/stats['registros_iniciales']*100:.2f}%)\n")
         
         f.write("\nDESPUÉS:\n")
-        for col, count in stats['nulos_despues'].items():
-            if count > 0:
+        nulos_despues_total = sum([v for v in stats['nulos_despues'].values() if isinstance(v, (int, float))])
+        if nulos_despues_total == 0:
+            f.write("  ✓ Sin valores nulos detectados\n")
+        else:
+            for col, count in stats['nulos_despues'].items():
                 f.write(f"  {col}: {count} nulos ({count/stats['registros_finales']*100:.2f}%)\n")
         
         f.write("\n✅ CALIDAD DE DATOS FINAL:\n")
