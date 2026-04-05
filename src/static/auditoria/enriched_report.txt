@@ -1,0 +1,13 @@
+REPORTE DE ENRIQUECIMIENTO DE DATOS - EA3
+==================================================
+Fecha de proceso: 2026-04-05 08:58:20.424894
+Registros Dataset Base: 1275
+Registros Dataset Enriquecido: 1275
+
+FUENTES INTEGRADAS:
+- garantias.json: Incorporación de costos de servicio técnico.
+- descripciones.txt: Agregado de slogans comerciales por marca.
+
+OPERACIONES DE CRUCE:
+- Coincidencias detectadas: 1101 registros enriquecidos.
+- Cálculo de nueva métrica: 'Total_Price_With_Warranty'.

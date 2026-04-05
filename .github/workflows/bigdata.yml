@@ -1,25 +1,25 @@
-name: Pipeline Laptop Data EA1 & EA2
+name: Pipeline Laptop Data - EA1, EA2 & EA3
 
 on:
   push:
     branches: [main]
-  workflow_dispatch: # permit manual trigger of the workflow
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write # give read permissions to the repository contents
+      contents: write # Permiso crucial para que el bot pueda guardar los resultados
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4 # Versión estable v4
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.10" # specify the Python version
+          python-version: "3.10"
           cache: "pip"
 
       - name: Install dependencies
@@ -27,44 +27,36 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run EA1
-        run: python ingestion.py
+      # Ejecución secuencial de las 3 etapas
+      - name: Run EA1 (Ingestion)
+        run: python src/ingestion.py
 
-      - name: Run EDA
-        run: python exploratory_analysis.py
+      - name: Run EA2 (Cleaning)
+        run: python src/cleaning.py
 
-      - name: Run EA2
-        run: python cleaning.py
+      - name: Run EA3 (Enrichment)
+        run: python src/enrichment.py
 
-      - name: 📊 Upload Cleaned data Artifact (CSV)
-        uses: actions/upload-artifact@v6
+      # --- SECCIÓN DE ARTEFACTOS (Para descarga directa en la pestaña Actions) ---
+      - name: 📊 Upload Enriched Data Artifact
+        uses: actions/upload-artifact@v4
         with:
-          name: cleaned-data-csv
-          path: src/xlsx/cleaned_data.csv
+          name: enriched-data-results
+          path: src/xlsx/enriched_data.csv
           retention-days: 30
 
-      - name: 📊 Upload Cleaned data Artifact (Excel)
-        uses: actions/upload-artifact@v6
+      - name: 📋 Upload Enrichment Report
+        uses: actions/upload-artifact@v4
         with:
-          name: cleaned-data-excel
-          path: src/xlsx/cleaned_data.xlsx
-          retention-days: 30
+          name: enrichment-audit-report
+          path: src/static/auditoria/enriched_report.txt
 
-      - name: 📋 Upload EDA Report Artifact
-        uses: actions/upload-artifact@v6
-        with:
-          name: eda-report
-          path: src/static/auditoria/eda_report.txt
-          retention-days: 30
-
-      - name: 📋 Upload Audit Report Artifact
-        uses: actions/upload-artifact@v6
-        with:
-          name: audit-report
-          path: src/static/auditoria/cleaning_report.txt
-          retention-days: 30
-
-      - name: Display Audit Report
+      # --- SECCIÓN DE PERSISTENCIA (Guarda los cambios en tu Repo) ---
+      - name: Commit and Push results
         run: |
-          echo "=== Audit Report ==="
-          cat src/static/auditoria/cleaning_report.txt
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          # Agregamos la DB y todos los reportes generados
+          git add src/db/ingestion.db src/xlsx/*.csv src/static/auditoria/*.txt
+          git commit -m "Auto-update: Pipeline completo EA1-EA2-EA3 ejecutado exitosamente" || echo "No hay cambios para commitear"
+          git push

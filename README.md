@@ -2,6 +2,14 @@
 
 Implementación de la **Actividad Evaluable 2 (EA2)** del Proyecto Integrador de Big Data. Este proyecto realiza el preprocesamiento y limpieza de un dataset de precios de laptops utilizando Pandas en un entorno que simula procesamiento en la nube.
 
+## Etapa 3: Enriquecimiento de Datos (EA3)
+
+En esta fase, el dataset limpio se integró con fuentes externas para aportar valor de negocio:
+
+- **Integración Multiformato:** Se cruzaron datos provenientes de JSON (Garantías) y TXT (Marketing).
+- **Lógica de Negocio:** Se creó la métrica `Total_Cost_EUR` combinando el precio base con el costo de servicio.
+- **Auditoría:** El archivo `enriched_report.txt` detalla la cantidad de registros que lograron cruzarse exitosamente.
+
 ## 📋 Descripción
 
 Este proyecto implementa un **pipeline automatizado de data cleaning** que:

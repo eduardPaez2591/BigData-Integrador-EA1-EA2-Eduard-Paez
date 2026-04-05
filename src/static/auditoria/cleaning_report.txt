@@ -1,4 +1,4 @@
-REPORTE TÉCNICO DE PREPROCESAMIENTO Y LIMPIEZA DE DATOS - 2026-03-17 16:11:26.219910
+REPORTE TÉCNICO DE PREPROCESAMIENTO Y LIMPIEZA DE DATOS - 2026-04-05 08:57:39.387641
 ================================================================================
 
 📊 ESTADÍSTICAS GENERALES:
@@ -19,8 +19,10 @@ Duplicados detectados: 0
 📋 ANÁLISIS DE VALORES NULOS:
 --------------------------------------------------------------------------------
 ANTES:
+  ✓ Sin valores nulos detectados
 
 DESPUÉS:
+  ✓ Sin valores nulos detectados
 
 ✅ CALIDAD DE DATOS FINAL:
 --------------------------------------------------------------------------------
